@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp5.0</TargetFramework>
+        <UserSecretsId>dc5cd567-5d19-4c6e-a484-fe83728345c4</UserSecretsId>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <ProjectReference Include="..\Tenet.Infrastructure\Tenet.Infrastructure.csproj" />
+    </ItemGroup>
+
+</Project>
