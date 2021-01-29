@@ -5,8 +5,10 @@
 #https://github.com/dotnet/dotnet-docker/blob/master/samples/aspnetapp/README.md
 #https://github.com/dotnet/dotnet-docker/blob/master/samples/dotnetapp/README.md
 
+#https://hub.docker.com/_/microsoft-dotnet-sdk/
+
 #FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim AS base
-FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0-alpine AS build
 
 ENV         ASPNETCORE_ENVIRONMENT =    Production
 ENV         ASPNETCORE_URLS             http://*:5004
@@ -46,7 +48,7 @@ FROM build AS publish
 RUN dotnet publish -c release --no-build -o /app
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:5.0-buster-slim
+FROM mcr.microsoft.com/dotnet/runtime:5.0-alpine
 WORKDIR /app
 COPY --from=publish /app .
 ENTRYPOINT ["dotnet", "tenetmiddleman.dll"]
