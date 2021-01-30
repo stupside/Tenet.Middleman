@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tenet.Domain.Configuration;
-using Tenet.Infrastructure;
+using Tenet.Infrastructure.Helpers;
 using Tenet.Persistence;
 using Tenet.Persistence.Contexts;
 

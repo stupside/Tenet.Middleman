@@ -4,7 +4,7 @@ using Tenet.Application.Helpers.Communications;
 
 namespace Tenet.Application.Helpers
 {
-    public interface IClient : IHttpClientFactory
+    public interface IClient
     {
         Task<ClientResponse<T>> Post<T, TPostType>(string url, TPostType obj);
 
