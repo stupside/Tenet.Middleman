@@ -24,7 +24,7 @@ namespace Tenet.Infrastructure.Services
                 .WithShouldAddForwardedHeaders(true)
                 .WithBeforeSend((c, hrm) =>
                 {
-                    ip = c.Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                    ip = c.Request.HttpContext.Connection.RemoteIpAddress?.ToString();
                     key = c.Request.Headers["TN-KEY"];
 
                     return Task.CompletedTask;

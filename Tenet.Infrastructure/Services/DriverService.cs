@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.EntityFrameworkCore;
+using Tenet.Application.Helpers;
 using Tenet.Application.Services;
 using Tenet.Domain.Entities;
 using Tenet.Infrastructure.Helpers;
@@ -13,11 +14,11 @@ namespace Tenet.Infrastructure.Services
 {
     public class DriverService : IDriverService
     {
-        private readonly Client _client;
+        private readonly IClient _client;
         private readonly Context _context;
         private readonly IDataProtector _protector;
 
-        public DriverService(Context context, IDataProtectionProvider provider, Client client)
+        public DriverService(Context context, IDataProtectionProvider provider, IClient client)
         {
             _context = context;
             _protector = provider.CreateProtector(nameof(DriverInstance));
@@ -85,7 +86,7 @@ namespace Tenet.Infrastructure.Services
             string iv = Encryption.iv_key();
             string encrypted = Encryption.Encrypt(instance.Driver.DriverContent.Bytes, instance.Driver.Secret, iv);
 
-            string response = string.Concat(new string[] { encrypted, iv }); // Response = Encrypted(Bytes).Iv
+            string response = string.Concat(new string[] { encrypted, iv });
             return (encrypted, iv, Encryption.GetSha256Hash(response));
         }
 
@@ -103,7 +104,15 @@ namespace Tenet.Infrastructure.Services
 
         private (string id, string ip, string key) FromInstance(string instance)
         {
-            instance = _protector.Unprotect(instance);
+            try
+            {
+                instance = _protector.Unprotect(instance);
+            }
+            catch
+            {
+                return (string.Empty, String.Empty, String.Empty);
+            }
+
             string[] values = instance.Split('.');
             return (values[0], values[1], values[2]);
         }

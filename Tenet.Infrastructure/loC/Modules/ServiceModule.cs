@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using Tenet.Application.Helpers;
 using Tenet.Application.Services;
+using Tenet.Infrastructure.Helpers;
 using Tenet.Infrastructure.Services;
 
 namespace Tenet.Infrastructure.loC.Modules
@@ -13,7 +14,8 @@ namespace Tenet.Infrastructure.loC.Modules
                 .As(typeof(ILicenseKeyService));
 
             builder.RegisterType(typeof(DriverService))
-                .As(typeof(IDriverService));
+                .As(typeof(IDriverService))
+                .SingleInstance();
 
             builder.RegisterType(typeof(Client))
                 .As(typeof(IClient));

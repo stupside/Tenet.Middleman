@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Tenet.Application.Helpers;
 using Tenet.Application.Helpers.Communications;
 
-namespace Tenet.Infrastructure
+namespace Tenet.Infrastructure.Helpers
 {
     public class Client : IClient
     {
