@@ -29,6 +29,7 @@ namespace Tenet.Application.Helpers.Communications
 
         public bool Success { get; protected set; }
         public string Message { get; protected set; }
+
         public HttpStatusCode Code { get; protected set; }
         public T Data { get; protected set; }
     }
