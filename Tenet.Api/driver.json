@@ -1,7 +1,7 @@
 {
-  "Pid": 27,
+  "Pid": 1003,
   "Name": "Driver",
   "Expiry": 5000,
-  "Secret": "supersecret",
-  "Bytes": "somebytes"
+  "Secret": "secret",
+  "Bytes": "0x00"
 }
