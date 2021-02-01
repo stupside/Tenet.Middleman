@@ -28,8 +28,8 @@ namespace Tenet.Api.Controllers
                 throw new System.Exception(nameof(_endpoints.Auth));
         }
 
-        [HttpGet("stream")]
-        public async Task<IEnumerable<DriverInstance>> Instances()
+        //[HttpGet("stream")]
+        private async Task<IEnumerable<DriverInstance>> Instances()
             => await _drivers.GetInstances();
 
         [HttpPost("auth")]
