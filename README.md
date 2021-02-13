@@ -3,12 +3,13 @@
 This project is exclusivly made for the auth service [TENET.OOO](https://app.tenet.ooo).
 
 This project acts as a middleman between the default auth and the clients. 
-It's delivered as is and will allow you to stream content to the client by using the library delivered when you registered to the service.
+It's delivered as is and will allow you to stream contents to the client using the library.
+
 If you want to use docker, I provided a sample, which is configured to work on an alpine by default.
 
 You can obviously tweak the solution to your needs.
 
-When you registered on the website, and you have created a new product you will might want to configure the middleman.
+When you registered on the website, and you have created a new product you might want to configure the middleman.
 
 First start by adding a new configuration file for your product. 
 ## Create a test.json:
