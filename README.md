@@ -1,6 +1,6 @@
 # Tenet.Middleman
 
-This project is exclusivly made for the auth service [TENET.OOO](https://app.tenet.com).
+This project is exclusivly made for the auth service [TENET.OOO](https://app.tenet.ooo).
 
 This project acts as a middleman between the default auth and the clients. 
 It's delivered as is and will allow you to stream content to the client by using the library delivered when you registered to the service.
