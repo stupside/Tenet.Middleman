@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Tenet.Application.Helpers;
 using Tenet.Application.Services;
 using Tenet.Domain.Entities;
 using Tenet.Infrastructure.Helpers;
@@ -17,16 +16,14 @@ namespace Tenet.Infrastructure.Services
     public class DriverService : IDriverService
     {
         private readonly IHttpContextAccessor _accessor;
-        private readonly IClient _client;
         private readonly Context _context;
         private readonly ILogger<DriverService> _logger;
         private readonly IDataProtector _protector;
 
-        public DriverService(Context context, IDataProtectionProvider provider, IClient client, IHttpContextAccessor accessor, ILogger<DriverService> logger)
+        public DriverService(Context context, IDataProtectionProvider provider, IHttpContextAccessor accessor, ILogger<DriverService> logger)
         {
             _context = context;
             _protector = provider.CreateProtector(nameof(DriverInstance));
-            _client = client;
             _accessor = accessor;
             _logger = logger;
         }
@@ -64,7 +61,7 @@ namespace Tenet.Infrastructure.Services
             });
             await _context.SaveChangesAsync();
 
-            _logger.LogInformation("[CreateInstance] Ip: {Ip} Key: {Key} Driver: {Driver}", CurrentIp(), key, driver.Name);
+            _logger.LogInformation("[CreateInstance] Ip= {Ip}, Key= {Key}, Driver= {Driver}", CurrentIp(), key, driver.Name);
 
             
             return ToInstance(entity.Entity.Id, key);
@@ -76,9 +73,13 @@ namespace Tenet.Infrastructure.Services
                 return (null, null, null);
 
             (string oid, string oip, string okey) = FromInstance(ist);
-            if (!okey.Equals(key) || !oip.Equals(CurrentIp()))
+
+            _logger.LogInformation("[GetInstance] oip = {Oip} = {Ip}, okey = {Okey} = {Key}",
+                oip, CurrentIp(), okey, key);
+            
+            if (okey != key || oip != CurrentIp())
             {
-                _logger.LogCritical("[GetInstance][Tempered] Ip: {Ip} and Key: {Key}", CurrentIp(), key);
+                _logger.LogCritical("[GetInstance][Tempered] Ip= {Ip}, Key= {Key}\n", CurrentIp(), key);
                 return (null, null, null);
             }
 
@@ -89,7 +90,7 @@ namespace Tenet.Infrastructure.Services
 
             if (instance == null)
             {
-                _logger.LogCritical("[GetInstance][NotFound] Ip: {Ip} and Key: {Key}", CurrentIp(), key);
+                _logger.LogCritical("[GetInstance][NotFound] Ip= {Ip}, Key= {Key}", CurrentIp(), key);
                 return (null, null, null);
             }
 
@@ -98,7 +99,7 @@ namespace Tenet.Infrastructure.Services
                 _context.DriverInstances.Remove(instance);
                 await _context.SaveChangesAsync();
                 
-                _logger.LogWarning("[GetInstance][Expired] Ip: {Ip} and Key: {Key}", CurrentIp(), key);
+                _logger.LogWarning("[GetInstance][Expired] Ip= {Ip}, Key= {Key}", CurrentIp(), key);
                 return (null, null, null);
             }
 
