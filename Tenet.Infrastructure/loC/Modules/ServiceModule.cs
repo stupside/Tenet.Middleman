@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.AspNetCore.Http;
 using Tenet.Application.Helpers;
 using Tenet.Application.Services;
 using Tenet.Infrastructure.Helpers;
@@ -19,6 +20,9 @@ namespace Tenet.Infrastructure.loC.Modules
 
             builder.RegisterType(typeof(Client))
                 .As(typeof(IClient));
+
+            builder.RegisterType(typeof(HttpContextAccessor))
+                .As(typeof(IHttpContextAccessor));
 
             base.Load(builder);
         }

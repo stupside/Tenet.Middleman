@@ -24,8 +24,7 @@ namespace Tenet.Infrastructure.Services
                 .WithShouldAddForwardedHeaders(true)
                 .WithBeforeSend((c, hrm) =>
                 {
-                    ip = c.Request.HttpContext.Connection.RemoteIpAddress?.ToString();
-                    key = c.Request.Headers["TN-KEY"];
+                    
 
                     return Task.CompletedTask;
                 })
@@ -37,7 +36,7 @@ namespace Tenet.Infrastructure.Services
                         {
                             if(int.TryParse(strs.FirstOrDefault(), out int pid))
                             {
-                                hrm.Headers.Add("TN-IST", await _drivers.CreateInstance(pid, key, ip));
+                                hrm.Headers.Add("TN-IST", await _drivers.CreateInstance(pid, c.Request.Headers["TN-KEY"]));
                             }
                         }
                     }

@@ -42,9 +42,7 @@ namespace Tenet.Api.Controllers
             string ist = HttpContext.Request.Headers["TN-IST"];
             string key = HttpContext.Request.Headers["TN-KEY"];
 
-            string ip = HttpContext.Connection.RemoteIpAddress?.ToString() ?? HttpContext.Request.Headers["CF-Connecting-IP"].ToString();
-
-            (string encrypted, string iv, string hash) = await _drivers.GetInstance(key, ip, ist);
+            (string encrypted, string iv, string hash) = await _drivers.GetInstance(key, ist);
 
             Response.Headers["i"] = iv;
             Response.Headers["h"] = hash;
